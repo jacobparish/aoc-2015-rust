@@ -1,5 +1,3 @@
-#![feature(generic_const_exprs)]
-
 #[macro_use]
 extern crate scan_fmt;
 
@@ -37,7 +35,7 @@ mod utils;
 
 // todo: figure out how to let return type of functions be arbitrary integer types
 // so we don't have to use i64 for everything
-fn lookup_day(day: i8) -> (fn(&str) -> i64, fn(&str) -> i64) {
+fn lookup_day(day: u8) -> (fn(&str) -> i64, fn(&str) -> i64) {
     match day {
         1 => (day01::part_a, day01::part_b),
         2 => (day02::part_a, day02::part_b),
@@ -69,11 +67,12 @@ fn lookup_day(day: i8) -> (fn(&str) -> i64, fn(&str) -> i64) {
 }
 
 fn main() {
-    let day: i8 = env::args()
+    let day: u8 = env::args()
         .nth(1)
         .expect("day is required")
         .parse()
         .expect("day must be an integer");
+
     let pathstr = format!("./inputs/day{:02}.txt", day);
     let path = path::Path::new(&pathstr);
     let input = fs::read_to_string(path).expect("failed to read input file");
