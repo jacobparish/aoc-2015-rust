@@ -30,11 +30,11 @@ pub fn part_a(input: &str) -> i64 {
 
 pub fn part_b(input: &str) -> i64 {
     let (_, _, visited) = input[..input.len() - 1].bytes().fold(
-        (0, [Point(0, 0), Point(0, 0)], HashSet::from([Point(0, 0)])),
-        |(i, mut positions, mut visited), dir| {
-            positions[i] = positions[i].move_in_dir(dir);
-            visited.insert(positions[i]);
-            (1 - i, positions, visited)
+        (Point(0, 0), Point(0, 0), HashSet::from([Point(0, 0)])),
+        |(curr1, curr2, mut visited), dir| {
+            let next = curr1.move_in_dir(dir);
+            visited.insert(next);
+            (curr2, next, visited)
         },
     );
     visited.len() as i64

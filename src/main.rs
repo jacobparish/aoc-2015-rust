@@ -1,6 +1,3 @@
-#[macro_use]
-extern crate scan_fmt;
-
 use std::env;
 use std::fs;
 use std::path;

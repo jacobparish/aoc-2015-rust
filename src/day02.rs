@@ -1,3 +1,5 @@
+use scan_fmt::scan_fmt;
+
 pub fn part_a(input: &str) -> i64 {
     input
         .lines()
