@@ -17,7 +17,7 @@ impl Point {
 }
 
 pub fn part_a(input: &str) -> i64 {
-    let (_, visited) = input[..input.len() - 1].bytes().fold(
+    let (_, visited) = input.trim().bytes().fold(
         (Point(0, 0), HashSet::from([Point(0, 0)])),
         |(curr, mut visited), dir| {
             let next = curr.move_in_dir(dir);
@@ -29,7 +29,7 @@ pub fn part_a(input: &str) -> i64 {
 }
 
 pub fn part_b(input: &str) -> i64 {
-    let (_, _, visited) = input[..input.len() - 1].bytes().fold(
+    let (_, _, visited) = input.trim().bytes().fold(
         (Point(0, 0), Point(0, 0), HashSet::from([Point(0, 0)])),
         |(curr1, curr2, mut visited), dir| {
             let next = curr1.move_in_dir(dir);

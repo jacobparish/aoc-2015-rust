@@ -2,7 +2,7 @@ use itertools::FoldWhile::{Continue, Done};
 use itertools::Itertools;
 
 pub fn part_a(input: &str) -> i64 {
-    input[..input.len() - 1].bytes().fold(0, |acc, b| match b {
+    input.trim().bytes().fold(0, |acc, b| match b {
         b'(' => acc + 1,
         b')' => acc - 1,
         _ => panic!("unexpected character"),
@@ -10,7 +10,8 @@ pub fn part_a(input: &str) -> i64 {
 }
 
 pub fn part_b(input: &str) -> i64 {
-    input[..input.len() - 1]
+    input
+        .trim()
         .bytes()
         .enumerate()
         .fold_while(0, |acc, (i, b)| match b {

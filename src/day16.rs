@@ -66,26 +66,28 @@ impl FromStr for Sue {
     type Err = ScanError;
 
     fn from_str(s: &str) -> Result<Self, <Self as FromStr>::Err> {
-        let (number, sue_props) = scan_fmt!(s, "Sue {d}: {[^\n]}", usize, String).unwrap();
-        Ok(sue_props
-            .split(", ")
-            .fold(Sue::empty(number), |mut sue, sue_prop| {
-                let (prop, n) = scan_fmt!(sue_prop, "{}: {d}", String, u8).unwrap();
-                match prop.as_str() {
-                    "children" => sue.children = Some(n),
-                    "cats" => sue.cats = Some(n),
-                    "samoyeds" => sue.samoyeds = Some(n),
-                    "pomeranians" => sue.pomeranians = Some(n),
-                    "akitas" => sue.akitas = Some(n),
-                    "vizslas" => sue.vizslas = Some(n),
-                    "goldfish" => sue.goldfish = Some(n),
-                    "trees" => sue.trees = Some(n),
-                    "cars" => sue.cars = Some(n),
-                    "perfumes" => sue.perfumes = Some(n),
-                    _ => panic!("invalid sue prop"),
-                }
-                sue
-            }))
+        scan_fmt!(s, "Sue {d}: {[^\n]}", usize, String).map(|(number, sue_props)| {
+            sue_props
+                .split(", ")
+                .fold(Sue::empty(number), |mut sue, sue_prop| {
+                    // todo: really this should return the error
+                    let (prop, n) = scan_fmt!(sue_prop, "{}: {d}", String, u8).unwrap();
+                    match prop.as_str() {
+                        "children" => sue.children = Some(n),
+                        "cats" => sue.cats = Some(n),
+                        "samoyeds" => sue.samoyeds = Some(n),
+                        "pomeranians" => sue.pomeranians = Some(n),
+                        "akitas" => sue.akitas = Some(n),
+                        "vizslas" => sue.vizslas = Some(n),
+                        "goldfish" => sue.goldfish = Some(n),
+                        "trees" => sue.trees = Some(n),
+                        "cars" => sue.cars = Some(n),
+                        "perfumes" => sue.perfumes = Some(n),
+                        _ => panic!("invalid sue prop"),
+                    }
+                    sue
+                })
+        })
     }
 }
 
